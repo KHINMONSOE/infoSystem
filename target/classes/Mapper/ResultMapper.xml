@@ -1,0 +1,140 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.dao.ResultDao">
+
+    <select id="queryById" parameterType="Integer" resultType="com.info.entity.Result">
+    SELECT * FROM user_result
+    WHERE questionid = #{questionid};
+    </select>
+
+    <insert id="addUser" parameterType="com.info.entity.Result">
+        INSERT INTO
+            user_result(mail,username,company,deploy,year,questionid,userinputres,commitdate)
+
+        values
+            (#{mail},#{username},#{company},#{deploy},#{year},#{questionid},#{userinputres},#{commitdate});
+    </insert>
+
+    <delete id="dropUser" parameterType="Integer">
+        DELETE FROM user_result
+        WHERE questionid = #{questionid};
+    </delete>
+
+    <update id="modifyUser" parameterType="com.info.entity.Result">
+        UPDATE user_result
+        SET mail = #{mail},
+            username = #{username},
+            company = #{company},
+            deploy = #{deploy},
+            year = #{year},
+            questionid = #{questionid},
+            userinputres = #{userinputres},
+            commitdate = #{commitdate},
+        WHERE questionid = #{questionid}id;
+    </update>
+
+     <select id="queryAllUser" resultType="com.info.entity.Result">
+        SELECT * FROM user_result;
+    </select>
+    
+    <!-- <select id="queryByYear" parameterType="com.info.entity.Result" resultType="com.info.entity.Result">
+  SELECT
+  user_result.year,
+  user_result.mail,
+  user_result.company,
+  user_result.username,
+  user_result.commitdate,
+  count(userinputres)as userinputres,
+  CASE WHEN user_question.result = user_result.userinputres THEN '10' ELSE
+  '0' END AS score
+  FROM
+  user_question
+  JOIN user_result ON user_question.questionid = user_result.questionid
+  WHERE
+  user_result.year = #{year};
+ </select> -->
+ 
+ <select id="queryByYear" parameterType="com.info.entity.Result" resultType="com.info.entity.Result">
+  SELECT
+  user_result.year,
+  user_result.mail,
+  user_result.company,
+  user_result.username,
+  user_result.commitdate,
+  CASE WHEN user_question.result = user_result.userinputres THEN '〇' ELSE
+  '×' END AS userinputres,
+  CASE WHEN user_question.result = user_result.userinputres THEN '10' ELSE
+  '0' END AS score
+  FROM
+  user_question
+  JOIN user_result ON user_question.questionid = user_result.questionid
+  WHERE
+  user_result.year = #{year};
+ </select>
+   
+ 
+    
+    <!-- <select id="showScore" parameterType="com.info.entity.Result" resultType="com.info.entity.Result">
+        SELECT
+        user_result.year,
+        user_result.mail,
+        user_result.company,
+        user_result.username,
+        if(user_question.result = user_result.userinputres, '〇', '×') as userinputres,
+        CASE WHEN user_question.result = user_result.userinputres THEN '〇' ELSE '×' END AS userinputres,
+        user_result.commitdate,
+        if(user_question.result = user_result.userinputres, '10', '0') as score
+        FROM user_question
+        JOIN user_result ON user_question.questionid = user_result.questionid;
+    </select> -->
+    
+    <select id="showScore" parameterType="com.info.entity.Result" resultType="com.info.entity.Result">
+    SELECT 
+    user_result.year, 
+    user_result.mail, 
+    user_result.company, 
+    user_result.username, 
+    user_result.commitdate, 
+    count(userinputres)as userinputres, 
+    sum(user_question.score)as score
+	from user_question
+	left join user_result
+	using(questionid) 
+	where user_question.result = user_result.userinputres 
+	group by user_result.username;
+    </select>
+    
+    <!-- <select id="queryByScore" parameterType="com.info.entity.Result" resultType="com.info.entity.Result">
+    	select 
+    	user_result.year
+        ,user_result.mail
+        ,user_result.company
+        ,user_result.username
+        ,if(user_question.result = user_result.userinputres, '〇', '×') as questionid
+        ,case when user_question.result = user_result.userinputres then '〇' else '×' end as questionid
+        ,user_result.commitdate
+        ,user_question.score
+       FROM user_question left join user_result on user_result.questionid = user_question.questionid;
+    </select> -->
+    
+    <!-- <select id="queryByScore" parameterType="com.info.entity.Result" resultType="com.info.entity.Result">
+    	SELECT DISTINCT
+	    user_result.mail
+	    ,user_result.username
+	    ,user_result.company
+	    ,user_result.deploy
+	    ,user_result.year
+	    ,user_question.question
+	    ,user_result.userinputres
+	    ,user_question.result
+	    ,user_result.commitdate
+	    ,user_question.questionid
+	    ,user_question.score
+	    ,case when user_question.result = user_result.userinputres then '〇' else '×' end as questionid
+	    FROM user_question left join user_result on user_result.questionid = user_question.questionid
+	    WHERE user_question.year =  CAST(DATE_FORMAT(NOW(), '%Y') AS CHAR (4))
+	    AND user_question.disp_flg = 1;
+    </select> -->
+
+</mapper>

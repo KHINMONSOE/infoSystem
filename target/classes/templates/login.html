@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+    <script
+            src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+
+
+    <script
+            src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+    body {
+      background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat;
+      background-size: 100% 130%;
+    }
+
+    #login_box {
+      width:37%;
+      height: 500px;
+      background-color: #00000060;
+      margin: auto;
+      margin-top: 10%;
+      text-align: center;
+      border-radius: 10px;
+      padding: 50px 50px;
+    }
+
+    h2 {
+      color: #ffffff90;
+      margin-top: 5%;
+    }
+
+    #input-box {
+      margin-top: 5%;
+    }
+
+    span {
+      color: #fff;
+    }
+
+    input {
+      border: 0;
+      width: 60%;
+      font-size: 15px;
+      color: #fff;
+      background: transparent;
+      border-bottom: 2px solid #fff;
+      padding: 5px 10px;
+      outline: none;
+      margin-top: 10px;
+    }
+
+    #login {
+      margin-top: 50px;
+      width: 60%;
+      height: 30px;
+      border-radius: 10px;
+      border: 0;
+      color: #fff;
+      text-align: center;
+      line-height: 30px;
+      font-size: 15px;
+      background-image: linear-gradient(to right, #30cfd0, #330867);
+    }
+
+    #sign_up {
+      margin-top: 45%;
+      margin-left: 60%;
+    }
+
+    a {
+      color: #b94648;
+    }
+         .error-message1{
+             color: red;
+            left: 920px; /* 从左侧向右偏移 100px */
+            position: absolute;
+            top: 355px; /* 从顶部向下偏移 50px */
+        }
+        .error-message {
+            color: red;
+            left: 920px; /* 从左侧向右偏移 100px */
+            position: absolute;
+            top: 290px; /* 从顶部向下偏移 50px */
+        }
+        img {
+            padding: 10px; /* 添加内边距，使图片与容器边缘有一定距离 */
+			border-radius:200% ; /* 设置水平半径为容器宽度的50%，垂直半径为容器高度的70% */
+			overflow: hidden; /* 将溢出的内容裁剪掉 */
+            background-color: rgba(255, 255, 255, 0.7);
+			position: absolute;
+			top: 23%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 250px;
+			height: 70px;
+		}
+    </style>
+</head>
+<body>
+  <img src="http://www.suncom.ne.jp/images/logo.png" alt="Your Image">
+
+  <div class="error-message" th:if="${erroruserid}" th:text="${erroruserid}"></div>
+  <div class="error-message1" th:if="${errorpassword}" th:text="${errorpassword}"></div>
+  <section class="intro">
+    <form role="form" action="/loginIn" method="post" class="centered-form" onsubmit="return validateForm()">
+      <div id="login_box">
+        <h2>サンコム個人情報研修システム</h2>
+
+        <input type="text" id="userid" name="userid" placeholder="管理者ID"  
+        required autocomplete="off" oninvalid="this.setCustomValidity('管理者ID入れてください')"
+         onchange="this.setCustomValidity('')">
+        <br> <br>
+
+        <input type="password" id="password" name="password" placeholder="パスワード" 
+       required autocomplete="off" oninvalid="this.setCustomValidity('パスワード入れてください')" 
+       onchange="this.setCustomValidity('')">
+        <br>
+
+        <input type="submit" id="login" value="登録">
+      </div>
+    </form>
+  </section>
+</body>
+
+
+</html>
