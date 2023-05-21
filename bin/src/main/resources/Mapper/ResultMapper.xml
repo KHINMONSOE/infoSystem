@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.dao.ResultDao">
+
+    <select id="queryById" parameterType="Integer" resultType="com.info.entity.Result">
+    SELECT * FROM user_result
+    WHERE questionid = #{questionid};
+    </select>
+
+    <insert id="addUser" parameterType="com.info.entity.Result">
+        INSERT INTO
+            user_result(mail,username,company,deploy,year,question,userinputres,commitdate,questionid)
+
+        values
+            (#{mail},#{username},#{company},#{deploy},#{year},#{question},#{userinputres},#{commitdate},#{questionid});
+    </insert>
+
+    <delete id="dropUser" parameterType="Integer">
+        DELETE FROM user_result
+        WHERE questionid = #{questionid};
+    </delete>
+
+    <update id="modifyUser" parameterType="com.info.entity.Result">
+        UPDATE user_result
+        SET mail = #{mail},
+            username = #{username},
+            company = #{company},
+            deploy = #{deploy},
+            year = #{year},
+            questionid = #{questionid},
+            userinputres = #{userinputres},
+            commitdate = #{commitdate}
+        WHERE questionid = #{questionid}id;
+    </update>
+
+    <select id="queryAllUser" resultType="com.info.entity.Result">
+    SELECT * FROM user_question ;
+    </select>
+
+    <select id="queryByYear" parameterType="com.info.entity.Result" resultType="com.info.entity.Result">
+    SELECT DISTINCT
+    user_result.mail
+    ,user_result.username
+    ,user_result.company
+    ,user_result.deploy
+    ,user_result.year
+    ,user_question.question
+    ,user_result.userinputres
+    ,user_result.commitdate
+    ,user_question.questionid
+    FROM user_question left join user_result on user_result.questionid = user_question.questionid
+    WHERE user_question.year =  CAST(DATE_FORMAT(NOW(), '%Y') AS CHAR (4))
+    AND user_question.disp_flg = 1;
+    </select>
+
+</mapper>

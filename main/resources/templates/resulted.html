@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <title>resultedPage</title>
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+
+<style>
+    body {
+        /*background-color:rgb(182, 176, 232);*/
+        background-color: #f3f3e1;
+    }
+    #k{
+              background-color: #4CAF50;
+        color: white;
+        padding: 5px 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+    
+    }
+     #b{
+           background-color: #4CAF50;
+        color: white;
+        padding: 5px 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+</style>
+<!-- 在 </body> 标签前添加以下代码 -->
+<script>
+/* function downloadCSV() {
+    // 获取表格数据
+    var table = document.getElementById('myTable');
+    var rows = table.getElementsByTagName('tr');
+    var csv = '';
+
+    // 循环遍历表格数据并生成CSV格式字符串
+    for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        var cells = row.getElementsByTagName('td');
+        for (var j = 0; j < cells.length; j++) {
+            csv += cells[j].textContent + ','; // 修改这里，使用textContent代替innerText
+        }
+        csv += '\n';
+    }
+
+    // 创建并下载CSV文件
+    var downloadLink = document.createElement('a');
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    downloadLink.href = url;
+    downloadLink.download = '2023年度個人情報研修.csv';
+    downloadLink.click();
+} */
+
+
+/* function downloadTSV() {
+	   // 获取表格元素和表格行数
+	   var table = document.getElementById("myTable");
+	   var rows = table.getElementsByTagName("tr");
+	   var result = "";
+
+	   // 获取每列最长字符长度
+	   var maxColLengths = [];
+	   for (var i = 0; i < rows.length; i++) {
+	     var cells = rows[i].getElementsByTagName("td");
+	     for (var j = 0; j < cells.length; j++) {
+	       var cellValue = cells[j].innerText;
+	       var paddingLeft = parseInt(window.getComputedStyle(cells[j]).getPropertyValue("padding-left"));
+	       maxColLengths[j] = Math.max(maxColLengths[j] || 0, cellValue.length + paddingLeft);
+	     }
+	   }
+
+	   // 添加表头
+	   var headerCells = rows[0].getElementsByTagName("th");
+	   for (var j = 0; j < headerCells.length; j++) {
+	     // 将表头单元格数据填充到指定宽度并添加到结果字符串
+	     var headerCellValue = headerCells[j].innerText.padEnd(maxColLengths[j], " ");
+	     result += headerCellValue + "  ";
+	   }
+	   result += "\n";
+
+	   // 添加分隔行
+	   for (var j = 0; j < maxColLengths.length; j++) {
+	     result += "".padEnd(maxColLengths[j], "-") + "  ";
+	   }
+	   result += "\n";
+
+	   // 遍历每一行数据
+	   for (var i = 1; i < rows.length; i++) {
+	     var cells = rows[i].getElementsByTagName("td");
+	     var line = "";
+
+	     // 遍历每个单元格
+	     for (var j = 0; j < cells.length; j++) {
+	       // 将单元格数据填充到指定宽度并添加到一行中，用制表符分隔
+	       var cellValue = cells[j].innerText;
+	       var paddingLeft = parseInt(window.getComputedStyle(cells[j]).getPropertyValue("padding-left"));
+	       cellValue = cellValue.padEnd(maxColLengths[j], " ");
+	       line += cellValue + "  ";
+	     }
+
+	     // 去掉最后一个空格，并添加换行符
+	     line = line.slice(0, -1);
+	     result += line + "\n";
+	   }
+
+	   // 创建一个下载链接并点击
+	   var link = document.createElement("a");
+	   link.href = "data:text/plain;charset=utf-8," + encodeURIComponent(result);
+	   link.download = "table.tsv";
+	   link.click();
+	   
+	   if(userinputresList.length>0)
+      	{
+      		for(var i=0;i<userinputresList.length;i++)
+      		{
+      			
+      			userinputres = userinputres+ userinputresList[i].value + ",";
+      			//alert(userinputres);
+      		}
+      	}
+       if(!isBlank(userinputres))
+      	{
+       	userinputres = userinputres.substring(0,userinputres.length-1);
+      	}
+       
+       if(questionidList.length>0)
+      	{
+      		for(var i=0;i<questionidList.length;i++)
+      		{
+      			
+      			questionid = questionid+ questionidList[i].value + ",";
+      			//alert(userinputres);
+      		}
+      	}
+       if(!isBlank(questionid))
+      	{
+       	questionid = questionid.substring(0,questionid.length-1);
+      	} */
+	   
+       function downloadExcel() {
+           // Get the table element
+           var table = document.getElementById('myTable');
+
+           // Create a new workbook
+           var workbook = XLSX.utils.table_to_book(table);
+
+           // Convert the workbook to a binary XLSX file
+           var excelData = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+           // Create and download the Excel file
+           var blob = new Blob([excelData], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+           if (navigator.msSaveBlob) { // For IE 10+
+             navigator.msSaveBlob(blob, 'table_data.xlsx');
+           } else {
+             var link = document.createElement('a');
+             if (link.download !== undefined) { // For modern browsers
+               var url = URL.createObjectURL(blob);
+               link.setAttribute('href', url);
+               link.setAttribute('download', 'table_data.xlsx');
+               link.style.visibility = 'hidden';
+               document.body.appendChild(link);
+               link.click();
+               document.body.removeChild(link);
+             }
+           }
+         }
+	   
+</script>
+</head>
+<body>
+<br>
+<br>
+<h1 style="text-align: center;">サンコム個人情報研修システム</h1>
+<br>
+<br>
+<div style="align-content: center">
+
+    <div style="align-content: center">
+        <form action="/queryYear1" method="get">
+            <input type="text" name="Year" id="YearInput"  placeholder="2023" ><input th:value="検索" type="submit"id="k">
+        </form>
+    </div>
+
+</div>
+<br><br>
+ <button id="b" onclick="downloadExcel()">CSVダウンロード</button>
+
+<br>	<br><br>	<br><br>	
+
+<form id="myTable">
+<div id = "selectResult">
+    <table class="table table-dark table-hover" >
+        <thead>
+        <tr>
+            <th>年度</th>
+            <th>メール</th>
+            <th>会社名</th>
+            <th>氏名</th>
+            <th>正確個数</th>
+            <th>登録時間</th>
+            <th>点数</th>
+        </tr>
+        </thead>
+        
+        <tbody>
+        <tr th:each="resultList : ${resultList}">
+            <td th:text="${resultList.year}"></td>
+            <td th:text="${resultList.mail}"></td>
+            <td th:text="${resultList.company}"></td>
+            <td th:text="${resultList.username}"></td>
+            <td th:text="${resultList.userinputres}"></td>
+            <td th:text="${resultList.commitdate}"></td>
+            <td th:text="${resultList.score}"></td>
+        </tr>
+        </tbody>
+        </table>
+</div>
+</form>
+</body>
+</html>

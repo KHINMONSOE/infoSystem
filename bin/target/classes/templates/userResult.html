@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>userResult</title>
+
+<!-- 新 Bootstrap4 核心 CSS 文件 -->
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+<script
+	src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+
+<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+</head>
+<style>
+	body {
+  /* background-image: url("https://thumbs.dreamstime.com/b/lily-valley-flower-design-bunch-white-spring-flowers-30227919.jpg"); */
+   
+        /*background-color:rgb(182, 176, 232);*/
+        background-color: #f3f3e1;
+   
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+/* .dimmed {
+  filter: grayscale(5%);
+} */
+
+.button {
+	display: inline-block;
+	margin-right: 10px;
+    background-color: #4CAF50;
+}
+
+
+
+#aaa{
+        background-color: #4CAF50;
+
+    }
+
+
+
+
+</style>
+
+<body>
+<div id = "userResult" align="center">
+<h2>サンコム個人情報研修システム</h2>
+    &nbsp;
+    <form name="userResult" class="my-row">
+        <table >
+            <tr >
+                <td>Mail：</td>
+                <td><input type="text" name="mail"id="mail"></td>
+            </tr>
+            &nbsp;&nbsp;&nbsp;
+            <tr>
+                <td>会社名：</td>
+                <td><input type="text" name="company" id = "company"></td>
+            </tr>
+            &nbsp;&nbsp;&nbsp;
+            <tr>
+                <td>部署名：</td>
+                <td><input type="text" name="deploy" id="deploy"></td>
+            </tr>
+            &nbsp;&nbsp;&nbsp;
+            <tr>
+                <td>氏名：</td>
+                <td><input type="text" name="username" id="username"></td>
+            </tr>
+            &nbsp;&nbsp;&nbsp;
+            <tr>
+                <td>質問：</td>
+               
+            </tr>
+            <tr th:each="resultList : ${resultList}">
+
+                <!--<td th:text="${resultList.questionid}"></td>-->
+            </tr>
+            &nbsp;&nbsp;&nbsp;
+            <tr>
+                <td>回答：</td>
+                <td><input type="text" name="userinputres" id="userinputres"></td>
+            </tr>
+
+
+        </table>
+  </form>
+    <br><br>
+    <div align="center">
+        <button  id="aaa">确认</button>
+        &nbsp;
+        &nbsp;
+        <button type="button" class="button" onclick="window.history.back()">取消</button>
+    </div>
+</div>
+<script >
+    //字符串判空方法
+    function isBlank(str){
+        if(str == "" || str == null || str == undefined){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    //添加用户js响应事件
+    $("#aaa").click(function(){
+        var mail = document.forms["userResult"]["mail"].value;
+        var company = document.forms["userResult"]["company"].value;
+        var deploy = document.forms["userResult"]["deploy"].value;
+        var username = document.forms["userResult"]["username"].value;
+        var userinputres = document.forms["userResult"]["userinputres"].value;
+        //判断是否有未填项
+        if(isBlank(mail) || isBlank(company) || isBlank(deploy) || isBlank(username)
+            || isBlank(userinputres) ){
+            window.confirm("内容完善してください。");
+        }else {
+            var param = {
+                "mail": mail,
+                "company": company,
+                "deploy": deploy,
+                "username": username,
+                "userinputres": userinputres
+            };
+            $.ajax({
+                url:"/addUserResult", //请求url
+                data: param,    //请求参数
+                async: true,    //是否异步
+                success: function f(result) {
+                    window.confirm(result.msg); //新增用户成功提示框
+                    location.href = "user";    //重新加载界面，同步数据库信息
+                }
+            });
+
+        }
+
+    });
+</script>
+</body>
+</html>

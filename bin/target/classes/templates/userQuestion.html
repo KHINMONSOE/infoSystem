@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <title>UserQustionListPage</title>
+
+    <!-- 新 Bootstrap4 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+
+    <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+    body {
+
+        background-color:#f3f3e1;
+    }
+
+
+    #display-flag {
+        position: absolute;
+        top: 135px; /* 从顶部向下偏移 50px */
+        left: 1190px; /* 从左侧向右偏移 100px */
+    }
+    .display-flag {
+        position: absolute;
+        top: 135px; /* 从顶部向下偏移 50px */
+        left: 1100px; /* 从左侧向右偏移 100px */
+    }
+    #search {
+        position: absolute;
+        top: 250px; /* 从顶部向下偏移 50px */
+        left: 70px; /* 从左侧向右偏移 100px */
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        text-align: center;
+    }
+    #add {
+        position: absolute;
+        top: 250px; /* 从顶部向下偏移 50px */
+        left: 470px; /* 从左侧向右偏移 100px */
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    #record-copy{
+        background-color: #4CAF50;
+    }
+    .my-custom-button {
+        position: absolute;
+        top: 250px; /* 从顶部向下偏移 50px */
+        left: 670px; /* 从左侧向右偏移 100px */
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    #result {
+        position: absolute;
+        top:250px; /* 从顶部向下偏移 50px */
+        left: 470px; /* 从左侧向右偏移 100px */
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    #ggg{
+        background-color: #4CAF50;
+        color: white;
+        padding: 5px 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    #hhh{
+        background-color: #4CAF50;
+        color: white;
+        padding: 5px 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    #f{
+        background-color: #4CAF50;
+        color: white;
+        padding: 5px 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+
+    #record-copy {
+        position: absolute;
+        top: 135px; /* 从顶部向下偏移 50px */
+        left: 1200px; /* 从左侧向右偏移 100px */
+    }
+    .display-flag {
+        position: absolute;
+        top: 135px; /* 从顶部向下偏移 50px */
+        left: 900px; /* 从左侧向右偏移 100px */
+    }
+    #display-flag {
+        position: absolute;
+        top: 135px; /* 从顶部向下偏移 50px */
+        left: 1000px; /* 从左侧向右偏移 100px */
+    }
+
+</style>
+
+
+
+</head>
+<body>
+
+<div class="background-image">
+    <!-- 页面内容 -->
+</div>
+
+
+<br>	<br>
+
+<h1 style="text-align: center;">サンコム個人情報研修システム</h1>
+<br>
+<br>
+<div style="align-content: center">
+
+    <div style="align-content: center">
+        <form action="/queryYear" method="get">
+            <input type="text" name="Year" id="YearInput"  placeholder="2023" ><input th:value="検索" type="submit" id="ggg">
+        </form>
+    </div>
+    <br>
+    <div style="align-content: center">
+        <form action="/query" method="get">
+            <input type="text" name="QuestionID"id="fff"  placeholder="質問IDを入力してください！"><input th:value="検索" type="submit"id="hhh">
+        </form>
+    </div>
+    <br>
+
+    <div style="align-content: center">
+        <form action="/queryByFlag" method="get">
+            <input type="text" name="disp_flg"id="ff"  placeholder="flag入力してください！"><input th:value="検索" type="submit"id="f">
+        </form>
+    </div>
+    <br>
+
+    <label for="copy-year" class="display-flag">コピー年度</label>
+    <input type="text" id="display-flag">
+    &nbsp;
+    <button id="record-copy">レコードコピー</button>
+
+
+</div>
+
+<div>
+
+    <button class="my-custom-button" onclick="window.location.href='https://www.suncom.ne.jp/result'">結果一覧</button>
+
+    <!-- <a href="http://localhost:8080/result">结果一览</a> -->
+
+
+
+</div>
+
+
+<!-- <label class="display-flag">表示フラグ</label>
+<select id="display-flag">
+    <option value="1">true</option>
+    <option value="0">false</option>
+</select> -->
+
+
+<br><br><br>
+
+<!-- <label for="copy-year">コピー年度</label>
+<input type="text" id="copy-year">
+&nbsp;<button id="record-copy">レコードコピー</button>
+<br><br><br><br> -->
+
+<div id = "selectResult">
+    <table class="table table-dark table-hover" id="myTable">
+        <thead>
+        <tr>
+            <th>操作</th>
+            <th>年度</th>
+            <th>質問ID</th>
+            <th>質問内容</th>
+            <th>表示Flg</th>
+            <th>点数</th>
+            <th>登録時間</th>
+            <th>並び順</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="userQuestion : ${userQuestion}">
+            <td>
+                <a th:href=  "@{/userQuestionAdd+{id}(id=${userQuestion.questionid})}"id = "add">新規</a>
+                <a th:href = "@{/userQuestionUpdate+{id}(id=${userQuestion.questionid})}">編集</a>
+                <a th:href = "@{/deleteUserQuestion+{id}(id=${userQuestion.questionid})}" id = "delete">削除</a>
+            </td>
+            <td th:text="${userQuestion.year}"></td>
+            <td th:text="${userQuestion.questionid}"></td>
+            <td th:text="${userQuestion.question}"></td>
+            <td th:text="${userQuestion.disp_flg}"></td>
+            <td th:text="${userQuestion.score}"></td>
+            <td th:text="${userQuestion.commitdate}"></td>
+            <td th:text="${userQuestion.disp_sort}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+<script>
+    // 获取当前年份
+    var currentYear = new Date().getFullYear();
+
+    // 设置输入框的默认值
+    document.getElementById("2023").value = currentYear;
+</script>
+</html>
